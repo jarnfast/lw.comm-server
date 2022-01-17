@@ -3223,6 +3223,19 @@ io.sockets.on('connection', function (appSocket) {
         connections.splice(id, 1);
     });
 
+    if (config.featureShutdownEnabled) {
+        writeLog(chalk.yellow('INFO: Enabling x-shutdown'), 1);
+        appSocket.on('x-shutdown', function() {
+            writeLog(chalk.yellow('INFO: ') + chalk.blue('Requesting x-shutdown'), 1);
+            try {
+                //exec('echo SHUTDOWN');
+                exec('sudo shutdown -h now');
+                writeLog(chalk.yellow('INFO: shutdown initiated'), 1);
+            } catch (e) {
+                writeLog(chalk.red('ERROR: ') + chalk.blue('Error shutting down server: ' + e.message), 1);
+            }
+        });
+    }
 }); // End appSocket
 
 

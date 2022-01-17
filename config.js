@@ -35,4 +35,6 @@ config.jobOnAbort = '';
 
 config.uipath = path.join(__dirname, '/app')
 
+config.featureShutdownEnabled = process.env.SHUTDOWN_ENABLED || 0;
+
 module.exports = config;
